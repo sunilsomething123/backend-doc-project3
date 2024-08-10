@@ -1,14 +1,15 @@
 services:
   - type: web
-    name: youtube-to-mp4-converter
+    name: flask-downloader
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.9.13
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"
     plan: free
-    autoDeploy: false
-
-    healthCheckPath: /
-    healthCheckTimeout: 100
+    autoDeploy: true
+    envVars:
+      - key: LOCATION
+        value: "/downloads"
+    mounts:
+      - type: volume
+        name: downloads
+        path: /downloads
